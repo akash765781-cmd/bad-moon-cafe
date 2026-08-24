@@ -133,21 +133,22 @@ function detectBrowser(): string {
 }
 
 // -------------------------------------------------------------
-// Admin Authentication (username: akash, password: akash98728)
+// Admin Authentication (username: admin, password: BadMoonCafe@2026#SecureAdmin)
 // -------------------------------------------------------------
-const ADMIN_USER = "akash";
-const ADMIN_PASS = "akash98728";
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "BadMoonCafe@2026#SecureAdmin";
 
 export function adminLogin(username: string, password: string): { success: boolean; message: string } {
-  if (username.trim().toLowerCase() === ADMIN_USER.toLowerCase() && password === ADMIN_PASS) {
+  const u = username.trim().toLowerCase();
+  if ((u === "admin" || u === "akash") && password === ADMIN_PASS) {
     const session: AdminAuthSession = {
       isAuthenticated: true,
-      username: ADMIN_USER,
+      username: username.trim(),
       token: "bmc_adm_" + Math.random().toString(36).substring(2, 12) + Date.now(),
       loginTime: Date.now(),
     };
     safeSetItem(STORAGE_KEYS.AUTH, session);
-    return { success: true, message: "Welcome back, Akash!" };
+    return { success: true, message: "Welcome back, Admin!" };
   }
   return { success: false, message: "Invalid username or password. Please check your credentials." };
 }
