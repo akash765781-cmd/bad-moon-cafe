@@ -65,13 +65,7 @@ const STORAGE_KEYS = {
  * Default is true (Site is Active/ON)
  */
 export function isSiteOnline(): boolean {
-  if (typeof window === "undefined") return true;
-  try {
-    const val = localStorage.getItem(STORAGE_KEYS.SITE_STATUS);
-    return val !== "offline";
-  } catch {
-    return true;
-  }
+  return true;
 }
 
 export function setSiteOnline(online: boolean): void {

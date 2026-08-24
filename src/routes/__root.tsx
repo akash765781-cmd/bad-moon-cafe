@@ -195,12 +195,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {!online && !isAdminRoute ? (
-        <MaintenanceNotice />
-      ) : (
-        /* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */
-        <>
-          <Outlet />
+      <>
+        <Outlet />
 
           {/* Real-time Order Cancellation Notification Popup for Customer Screen */}
           {activeCancellation && !isAdminRoute && (
@@ -290,7 +286,6 @@ function RootComponent() {
             initialQuery={trackQuery}
           />
         </>
-      )}
     </QueryClientProvider>
   );
 }
