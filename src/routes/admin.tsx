@@ -71,8 +71,8 @@ type TabType = "submissions" | "clicks" | "views";
 
 function SimpleAdminPage() {
   const [auth, setAuth] = useState(() => getAdminSession());
-  const [usernameInput, setUsernameInput] = useState("akash");
-  const [passwordInput, setPasswordInput] = useState("akash98728");
+  const [usernameInput, setUsernameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
 
@@ -239,7 +239,7 @@ function SimpleAdminPage() {
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="mt-5 space-y-3.5">
+          <form onSubmit={handleLogin} autoComplete="off" className="mt-5 space-y-3.5">
             <div>
               <label className="block text-xs font-medium text-stone-300">Username</label>
               <div className="mt-1 flex items-center rounded-lg border border-stone-700 bg-[#1f1712] px-3 py-2">
@@ -247,6 +247,7 @@ function SimpleAdminPage() {
                 <input
                   type="text"
                   required
+                  autoComplete="off"
                   value={usernameInput}
                   onChange={(e) => setUsernameInput(e.target.value)}
                   placeholder="Username"
@@ -262,6 +263,7 @@ function SimpleAdminPage() {
                 <input
                   type={showPassword ? "text" : "password"}
                   required
+                  autoComplete="new-password"
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
                   placeholder="Password"
