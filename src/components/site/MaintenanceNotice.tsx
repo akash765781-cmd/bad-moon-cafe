@@ -1,8 +1,14 @@
+import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { Coffee, Lock, Mail, MapPin, Phone } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 import { CAFE } from "@/lib/cafe";
+import { getAdminSession } from "@/lib/analytics";
+import { AdminAuthModal } from "./AdminAuthModal";
 
 export function MaintenanceNotice() {
+  const navigate = useNavigate();
+  const [showAdminModal, setShowAdminModal] = useState(false);
+
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center bg-[#0a0705] px-4 py-12 text-white selection:bg-caramel/30 selection:text-white">
       {/* Ambient background glows */}
@@ -70,15 +76,27 @@ export function MaintenanceNotice() {
 
         {/* Admin Login Link */}
         <div className="mt-10 pt-6 border-t border-stone-800/80 flex items-center justify-center">
-          <Link
-            to="/admin"
+          <button
+            type="button"
+            onClick={() => {
+              if (getAdminSession().isAuthenticated) {
+                navigate({ to: "/admin" });
+              } else {
+                setShowAdminModal(true);
+              }
+            }}
             className="inline-flex items-center gap-2 rounded-full border border-stone-800 bg-[#16110e] px-4 py-2 text-xs font-medium text-stone-400 transition-all hover:border-caramel/50 hover:bg-[#1f1712] hover:text-white"
           >
             <Lock className="size-3.5 text-caramel" />
             <span>Admin Portal Login (Turn Site ON)</span>
-          </Link>
+          </button>
         </div>
       </div>
+
+      <AdminAuthModal
+        isOpen={showAdminModal}
+        onClose={() => setShowAdminModal(false)}
+      />
     </div>
   );
 }

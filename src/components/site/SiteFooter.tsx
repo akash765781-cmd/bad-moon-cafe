@@ -1,14 +1,17 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Clock, Coffee, Facebook, Instagram, Loader2, Lock, Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
 import { CAFE } from "@/lib/cafe";
-import { trackFormSubmission } from "@/lib/analytics";
+import { getAdminSession, trackFormSubmission } from "@/lib/analytics";
+import { AdminAuthModal } from "./AdminAuthModal";
 
 export function SiteFooter() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showAdminModal, setShowAdminModal] = useState(false);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -262,17 +265,29 @@ export function SiteFooter() {
           <div className="flex items-center gap-4">
             <p>Handcrafted with Passion • London, UK</p>
             <span className="text-stone-700">|</span>
-            <Link
-              to="/admin"
+            <button
+              type="button"
+              onClick={() => {
+                if (getAdminSession().isAuthenticated) {
+                  navigate({ to: "/admin" });
+                } else {
+                  setShowAdminModal(true);
+                }
+              }}
               className="inline-flex items-center gap-1 text-stone-500 transition-colors hover:text-caramel"
               title="Staff & Admin Portal"
             >
               <Lock className="size-3 text-caramel/70" />
               <span>Admin Portal</span>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
+
+      <AdminAuthModal
+        isOpen={showAdminModal}
+        onClose={() => setShowAdminModal(false)}
+      />
     </footer>
 
   );
