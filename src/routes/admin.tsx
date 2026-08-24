@@ -279,9 +279,24 @@ function SimpleAdminPage() {
               </div>
             </div>
 
-            <div className="rounded-lg bg-black/40 p-2.5 text-[0.7rem] text-stone-400">
-              User: <span className="text-white font-mono">akash</span> | Pass:{" "}
-              <span className="text-white font-mono">akash98728</span>
+            <div className="rounded-xl border border-stone-800 bg-[#120d0a] p-3 text-xs text-stone-300 flex items-center justify-between">
+              <div>
+                <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-stone-400">Admin Login Credentials</p>
+                <p className="mt-0.5 font-mono text-xs text-stone-200">
+                  User: <span className="text-caramel font-bold">akash</span> | Pass: <span className="text-caramel font-bold">akash98728</span>
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setUsernameInput("akash");
+                  setPasswordInput("akash98728");
+                }}
+                className="shrink-0 rounded-lg border border-caramel/40 bg-caramel/15 px-2.5 py-1 text-[0.7rem] font-bold text-caramel hover:bg-caramel hover:text-espresso transition-all active:scale-95"
+                title="Click to fill credentials into form"
+              >
+                Auto Fill
+              </button>
             </div>
 
             <button
